@@ -1,11 +1,9 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import {
   Box,
-  chakra,
   Container,
   Divider,
   Flex,
-  GridItem,
   Heading,
   HStack,
   Image,
@@ -14,7 +12,7 @@ import {
   Spacer,
   Text,
 } from "@chakra-ui/react";
-import { graphql, Link } from "gatsby";
+import { graphql, Link, PageProps } from "gatsby";
 import * as React from "react";
 
 const contentTypes = [
@@ -40,14 +38,14 @@ const contentTypes = [
   },
 ];
 
-export default function gridListWithCTA({ data }) {
+export default function Index({ data }: PageProps<Queries.IndexQuery>) {
   return (
     <Box as={Container} maxW="3xl" mt={14} p={4}>
       <Box>
         <Heading as="h1" fontSize="3xl" fontWeight="bold">
-          {data.site.siteMetadata.title}
+          {data.site?.siteMetadata?.title}
         </Heading>
-        <Text>{data.site.siteMetadata.description}</Text>
+        <Text>{data.site?.siteMetadata?.description}</Text>
       </Box>
       <Divider my={4} />
       <Box>
@@ -94,7 +92,7 @@ export default function gridListWithCTA({ data }) {
 }
 
 export const query = graphql`
-  query HomePageQuery {
+  query Index {
     allBlock {
       totalCount
     }

@@ -14,25 +14,31 @@ import {
   Tr,
   Wrap,
 } from "@chakra-ui/react";
-import { Link, graphql } from "gatsby";
+import { graphql, Link, PageProps } from "gatsby";
 import * as React from "react";
 
-function UF(str: string) {
+function UF(str: string | null | undefined) {
   // uppercase first
-  return str.charAt(0).toUpperCase() + str.slice(1);
+  if (typeof str === "string") {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  } else {
+    return "None";
+  }
 }
 
-export default function contentBlocksPage({ data }) {
+export default function contentBlocksPage({
+  data,
+}: PageProps<Queries.ContentBlocksPageQuery>) {
   return (
     <Container maxW="3xl" mt={14} p={4}>
       <Flex mb={2}>
         <Flex direction="column" h="4em">
           <Heading as="h1" fontSize="3xl" fontWeight="bold">
-            {data.block.localizedName}
+            {data.block?.localizedName}
           </Heading>
           <Spacer></Spacer>
           <Text as="code">
-            {data.block.jsonId}, {data.block.name}
+            {data.block?.jsonId}, {data.block?.name}
           </Text>
         </Flex>
 
@@ -41,12 +47,12 @@ export default function contentBlocksPage({ data }) {
           rounded="md"
           shadow="md"
           h="4em"
-          src={`https://raw.githubusercontent.com/MindustryGame/wiki/gh-pages/images/block-${data.block.name}-ui.png`}
+          src={`https://raw.githubusercontent.com/MindustryGame/wiki/gh-pages/images/block-${data.block?.name}-ui.png`}
         ></Image>
       </Flex>
 
       <Text as="i" mt={2} align="justify">
-        {data.block.description}
+        {data.block?.description}
       </Text>
 
       <Heading as="h2" fontSize="xl" mt={4}>
@@ -57,10 +63,10 @@ export default function contentBlocksPage({ data }) {
           <Td>Build requirements</Td>
           <Td>
             <Wrap spacing={2}>
-              {data.block.requirements.map((requirement) => {
+              {data.block?.requirements?.map((requirement) => {
                 return (
                   <Text>
-                    <Tooltip hasArrow label={requirement.item.localizedName}>
+                    <Tooltip hasArrow label={requirement?.item?.localizedName}>
                       <Link to="#todo">
                         <Image
                           display="inline-block"
@@ -69,11 +75,11 @@ export default function contentBlocksPage({ data }) {
                           }
                           h="1.125rem"
                           w="1.125rem"
-                          src={`https://raw.githubusercontent.com/MindustryGame/wiki/gh-pages/images/item-${requirement.item.name}.png`}
+                          src={`https://raw.githubusercontent.com/MindustryGame/wiki/gh-pages/images/item-${requirement?.item?.name}.png`}
                         ></Image>
                       </Link>
                     </Tooltip>
-                    &times;{requirement.amount}
+                    &times;{requirement?.amount}
                   </Text>
                 );
               })}
@@ -82,22 +88,26 @@ export default function contentBlocksPage({ data }) {
         </Tr>
         <Tr>
           <Td>Build time</Td>
-          <Td>{(data.block.buildCost / 60).toFixed(2)} seconds</Td>
+          <Td>
+            {typeof data.block?.buildCost === "string"
+              ? (data.block?.buildCost / 60).toFixed(2) + " seconds"
+              : "Unknown"}
+          </Td>
         </Tr>
         <Tr>
           <Td>Category</Td>
           <Td>
-            {UF(data.block.category)}
+            {UF(data.block?.category)}
             {/* TODO: icon */}
           </Td>
         </Tr>
         <Tr>
           <Td>Health</Td>
-          <Td>{data.block.health}</Td>
+          <Td>{data.block?.health}</Td>
         </Tr>
         <Tr>
           <Td>Size</Td>
-          <Td>{data.block.size}</Td>
+          <Td>{data.block?.size}</Td>
         </Tr>
       </Table>
 
@@ -114,8 +124,9 @@ export default function contentBlocksPage({ data }) {
           </Td>
           <Td>
             {/* TODO: unitModifier -> unit modifier */}
-            {data.block.flags.length > 0
-              ? data.block.flags.map((flag) => <Badge>{flag}</Badge>)
+            {data.block?.flags?.length !== undefined &&
+            data.block?.flags?.length > 0
+              ? data.block?.flags?.map((flag) => <Badge>{flag}</Badge>)
               : "None"}
           </Td>
         </Tr>
@@ -126,7 +137,7 @@ export default function contentBlocksPage({ data }) {
               <InfoOutlineIcon ml={2} />
             </Tooltip>
           </Td>
-          <Td>{UF(data.block.group)}</Td>
+          <Td>{UF(data.block?.group)}</Td>
         </Tr>
         <Tr>
           <Td>
@@ -143,7 +154,7 @@ export default function contentBlocksPage({ data }) {
               <InfoOutlineIcon ml={2} />
             </Tooltip>
           </Td>
-          <Td>{UF(data.block.priority)}</Td>
+          <Td>{UF(data.block?.priority)}</Td>
         </Tr>
       </Table>
     </Container>

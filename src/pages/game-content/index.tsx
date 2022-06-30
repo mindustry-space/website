@@ -7,10 +7,12 @@ import {
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
-import { Link, graphql } from "gatsby";
+import { graphql, Link, PageProps } from "gatsby";
 import * as React from "react";
 
-export default function gameContentIndex({ data }) {
+export default function gameContentIndex({
+  data,
+}: PageProps<Queries.GameContentIndexQuery>) {
   return (
     <Container maxW="3xl" mt={14} p={4}>
       <Heading as="h1" fontSize="2xl" mb={2}>
