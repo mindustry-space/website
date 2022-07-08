@@ -16,21 +16,15 @@ import {
 } from "@chakra-ui/react";
 import { graphql, Link, PageProps } from "gatsby";
 import * as React from "react";
+import Layout from "../../components/layout";
 
-function UF(str: string | null | undefined) {
-  // uppercase first
-  if (typeof str === "string") {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  } else {
-    return "None";
-  }
-}
+import { path, ui, up } from "../../utils";
 
 export default function contentBlocksPage({
   data,
 }: PageProps<Queries.ContentBlocksPageQuery>) {
   return (
-    <Container maxW="3xl" mt={14} p={4}>
+    <Layout>
       <Flex mb={2}>
         <Flex direction="column" h="4em">
           <Heading as="h1" fontSize="3xl" fontWeight="bold">
@@ -38,17 +32,12 @@ export default function contentBlocksPage({
           </Heading>
           <Spacer></Spacer>
           <Text as="code">
-            {data.block?.jsonId}, {data.block?.name}
+            {data.block?.gameId}, {data.block?.name}
           </Text>
         </Flex>
 
         <Spacer></Spacer>
-        <Image
-          rounded="md"
-          shadow="md"
-          h="4em"
-          src={`https://raw.githubusercontent.com/MindustryGame/wiki/gh-pages/images/block-${data.block?.name}-ui.png`}
-        ></Image>
+        {ui(data.block, "4rem")}
       </Flex>
 
       <Text as="i" mt={2} align="justify">
@@ -67,19 +56,11 @@ export default function contentBlocksPage({
                 return (
                   <Text>
                     <Tooltip hasArrow label={requirement?.item?.localizedName}>
-                      <Link to="#todo">
-                        <Image
-                          display="inline-block"
-                          fallback={
-                            <Skeleton h="1.125rem" w="1.125rem"></Skeleton>
-                          }
-                          h="1.125rem"
-                          w="1.125rem"
-                          src={`https://raw.githubusercontent.com/MindustryGame/wiki/gh-pages/images/item-${requirement?.item?.name}.png`}
-                        ></Image>
+                      <Link to={path(requirement.item)}>
+                        {ui(requirement.item, "1.125rem")}
                       </Link>
                     </Tooltip>
-                    &times;{requirement?.amount}
+                    {requirement?.amount}
                   </Text>
                 );
               })}
@@ -97,7 +78,7 @@ export default function contentBlocksPage({
         <Tr>
           <Td>Category</Td>
           <Td>
-            {UF(data.block?.category)}
+            {up(data.block?.category)}
             {/* TODO: icon */}
           </Td>
         </Tr>
@@ -137,7 +118,7 @@ export default function contentBlocksPage({
               <InfoOutlineIcon ml={2} />
             </Tooltip>
           </Td>
-          <Td>{UF(data.block?.group)}</Td>
+          <Td>{up(data.block?.group)}</Td>
         </Tr>
         <Tr>
           <Td>
@@ -154,10 +135,10 @@ export default function contentBlocksPage({
               <InfoOutlineIcon ml={2} />
             </Tooltip>
           </Td>
-          <Td>{UF(data.block?.priority)}</Td>
+          <Td>{up(data.block?.priority)}</Td>
         </Tr>
       </Table>
-    </Container>
+    </Layout>
   );
 }
 
@@ -166,22 +147,26 @@ export const query = graphql`
     block(id: { eq: $id }) {
       buildCost
       category
+      contentType
       description
       flags
       group
       health
-      jsonId
+      gameId
       localizedName
       name
       priority
       requirements {
         amount
         item {
+          contentType
           localizedName
           name
+          uiIcon
         }
       }
       size
+      uiIcon
     }
   }
 `;

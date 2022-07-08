@@ -1,5 +1,4 @@
 import {
-  Container,
   Heading,
   Image,
   Skeleton,
@@ -9,46 +8,35 @@ import {
 } from "@chakra-ui/react";
 import { graphql, Link, PageProps } from "gatsby";
 import * as React from "react";
+import Layout from "../../components/layout";
 
 export default function gameContentIndex({
   data,
 }: PageProps<Queries.GameContentIndexQuery>) {
   return (
-    <Container maxW="3xl" mt={14} p={4}>
+    <Layout>
       <Heading as="h1" fontSize="2xl" mb={2}>
-        Game Content
-      </Heading>
-      <Heading as="h2" fontSize="xl" mt={4} mb={2}>
         Blocks
       </Heading>
       <Wrap spacing={2}>
         {data.allBlock.nodes.map((block) => {
           return (
             <WrapItem margin={0}>
-              <Link to={`/game-content/blocks/${block.name}`}>
+              <Link to={`/blocks/${block.name}`}>
                 <Tooltip hasArrow label={block.localizedName}>
-                  <Image
-                    fallback={
-                      <Skeleton
-                        rounded="md"
-                        shadow="md"
-                        h="2em"
-                        w="2em"
-                      ></Skeleton>
-                    }
-                    h="2em"
-                    w="2em"
-                    rounded="sm"
-                    shadow="md"
-                    src={`https://raw.githubusercontent.com/MindustryGame/wiki/gh-pages/images/block-${block.name}-ui.png`}
-                  ></Image>
+                  <svg height="2em" width="2em">
+                    {/* rounded="sm" shadow="md" */}
+                    <use
+                      xlinkHref={`/images/svgs/aa310bd20/block.svg#block-${block.name}-ui`}
+                    />
+                  </svg>
                 </Tooltip>
               </Link>
             </WrapItem>
           );
         })}
       </Wrap>
-    </Container>
+    </Layout>
   );
 }
 
@@ -56,10 +44,10 @@ export const query = graphql`
   query GameContentIndex {
     allBlock(
       filter: { buildVisibility: { ne: "hidden" } }
-      sort: { fields: jsonId }
+      sort: { fields: gameId }
     ) {
       nodes {
-        jsonId
+        gameId
         localizedName
         name
       }
