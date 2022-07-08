@@ -11,18 +11,26 @@ export type Content =
 
 const error = "missing needed properties";
 
-export function path({ contentType, name }: Content) {
-  if (!contentType || !name) throw error;
+export interface Path {
+  contentType: string;
+  name: String;
+}
+
+export function path({ contentType, name }: Path) {
   return `/${pluralize(contentType)}/${name}`;
 }
 
+export interface UI {
+  contentType: string;
+  uiIcon: string;
+}
+
 export function ui(
-  { contentType, uiIcon }: Content,
+  { contentType, uiIcon }: UI,
   size: string,
-  style: React.CSSProperties | undefined
+  style: React.CSSProperties | undefined = undefined
 ) {
   // TODO: component
-  if (!contentType || !uiIcon) throw error;
   return (
     <svg height={size} width={size} style={style}>
       <use xlinkHref={`/images/svgs/aa310bd20/${contentType}.svg#${uiIcon}`} />

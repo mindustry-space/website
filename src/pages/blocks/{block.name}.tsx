@@ -1,9 +1,12 @@
 import { InfoOutlineIcon } from "@chakra-ui/icons";
 import {
   Badge,
+  Box,
+  Center,
   Container,
   Flex,
   Heading,
+  HStack,
   Image,
   Skeleton,
   Spacer,
@@ -23,16 +26,18 @@ import { path, ui, up } from "../../utils";
 export default function contentBlocksPage({
   data,
 }: PageProps<Queries.ContentBlocksPageQuery>) {
+  if (data.block === null) throw "missing block";
+
   return (
     <Layout>
       <Flex mb={2}>
         <Flex direction="column" h="4em">
           <Heading as="h1" fontSize="3xl" fontWeight="bold">
-            {data.block?.localizedName}
+            {data.block.localizedName}
           </Heading>
           <Spacer></Spacer>
           <Text as="code">
-            {data.block?.gameId}, {data.block?.name}
+            {data.block.gameId}, {data.block.name}
           </Text>
         </Flex>
 
@@ -41,7 +46,7 @@ export default function contentBlocksPage({
       </Flex>
 
       <Text as="i" mt={2} align="justify">
-        {data.block?.description}
+        {data.block.description}
       </Text>
 
       <Heading as="h2" fontSize="xl" mt={4}>
@@ -52,45 +57,41 @@ export default function contentBlocksPage({
           <Td>Build requirements</Td>
           <Td>
             <Wrap spacing={2}>
-              {data.block?.requirements?.map((requirement) => {
-                return (
-                  <Text>
-                    <Tooltip hasArrow label={requirement?.item?.localizedName}>
-                      <Link to={path(requirement.item)}>
-                        {ui(requirement.item, "1.125rem", {
-                          display: "inline-block",
-                        })}
-                      </Link>
-                    </Tooltip>
-                    {requirement?.amount}
-                  </Text>
-                );
-              })}
+              {data.block.requirements.map((requirement) => (
+                <Link to={path(requirement.item)}>
+                  <Tooltip hasArrow label={requirement.item.localizedName}>
+                    <HStack spacing={0.5}>
+                      {ui(requirement.item, "1.125rem", {
+                        display: "inline-block",
+                      })}
+                      <Center as="span" h="1.125rem">
+                        {requirement.amount}
+                      </Center>
+                    </HStack>
+                  </Tooltip>
+                </Link>
+              ))}
             </Wrap>
           </Td>
         </Tr>
         <Tr>
           <Td>Build time</Td>
-          <Td>
-            {typeof data.block?.buildCost === "string"
-              ? (data.block?.buildCost / 60).toFixed(2) + " seconds"
-              : "Unknown"}
-          </Td>
+          <Td>{(data.block.buildCost / 60).toFixed(2) + " seconds"}</Td>
         </Tr>
         <Tr>
           <Td>Category</Td>
           <Td>
-            {up(data.block?.category)}
+            {up(data.block.category)}
             {/* TODO: icon */}
           </Td>
         </Tr>
         <Tr>
           <Td>Health</Td>
-          <Td>{data.block?.health}</Td>
+          <Td>{data.block.health}</Td>
         </Tr>
         <Tr>
           <Td>Size</Td>
-          <Td>{data.block?.size}</Td>
+          <Td>{data.block.size}</Td>
         </Tr>
       </Table>
 
@@ -106,11 +107,14 @@ export default function contentBlocksPage({
             </Tooltip>
           </Td>
           <Td>
-            {/* TODO: unitModifier -> unit modifier */}
-            {data.block?.flags?.length !== undefined &&
-            data.block?.flags?.length > 0
-              ? data.block?.flags?.map((flag) => <Badge>{flag}</Badge>)
-              : "None"}
+            <HStack>
+              {/* TODO: unitModifier -> unit modifier */}
+              {data.block.flags.length > 0
+                ? [...data.block.flags]
+                    .sort()
+                    .map((flag) => <Badge>{flag}</Badge>)
+                : "None"}
+            </HStack>
           </Td>
         </Tr>
         <Tr>
@@ -120,9 +124,9 @@ export default function contentBlocksPage({
               <InfoOutlineIcon ml={2} />
             </Tooltip>
           </Td>
-          <Td>{up(data.block?.group)}</Td>
+          <Td>{up(data.block.group)}</Td>
         </Tr>
-        <Tr>
+        {/* <Tr>
           <Td>
             Priority
             <Tooltip
@@ -138,7 +142,7 @@ export default function contentBlocksPage({
             </Tooltip>
           </Td>
           <Td>{up(data.block?.priority)}</Td>
-        </Tr>
+        </Tr> */}
       </Table>
     </Layout>
   );

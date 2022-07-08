@@ -7,15 +7,32 @@ export async function createSchemaCustomization({
   actions.createTypes(`
   type Requirements {
     amount: Int!
-    item: Item @link(from: "item", by: "gameId")
+    item: Item! @link(from: "item", by: "gameId")
   }
   
   type Block implements Node {
+    buildCost: Int!
+    category: String!
+    contentType: String!
+    description: String
+    gameId: Int!
+    flags: [String!]!
+    group: String!
+    health: Int!
+    localizedName: String!
+    name: String!
+    # priority: String!
     requirements: [Requirements!]!
+    size: Int!
+    uiIcon: String!
   }
   
   type Item implements Node {
+    contentType: String!
+    localizedName: String!
+    name: String!
     gameId: Int!
+    uiIcon: String!
   }
   `);
 }
