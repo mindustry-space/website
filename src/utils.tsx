@@ -16,10 +16,15 @@ export function path({ contentType, name }: Content) {
   return `/${pluralize(contentType)}/${name}`;
 }
 
-export function ui({ contentType, uiIcon }: Content, size: string) {
+export function ui(
+  { contentType, uiIcon }: Content,
+  size: string,
+  style: React.CSSProperties | undefined
+) {
+  // TODO: component
   if (!contentType || !uiIcon) throw error;
   return (
-    <svg height={size} width={size}>
+    <svg height={size} width={size} style={style}>
       <use xlinkHref={`/images/svgs/aa310bd20/${contentType}.svg#${uiIcon}`} />
     </svg>
   );

@@ -57,7 +57,9 @@ export default function contentBlocksPage({
                   <Text>
                     <Tooltip hasArrow label={requirement?.item?.localizedName}>
                       <Link to={path(requirement.item)}>
-                        {ui(requirement.item, "1.125rem")}
+                        {ui(requirement.item, "1.125rem", {
+                          display: "inline-block",
+                        })}
                       </Link>
                     </Tooltip>
                     {requirement?.amount}
