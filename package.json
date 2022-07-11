@@ -23,6 +23,7 @@
     "@emotion/styled": "^11.9.3",
     "@mdx-js/mdx": "v1",
     "@mdx-js/react": "v1",
+    "colord": "^2.9.2",
     "framer-motion": "^6.3.16",
     "gatsby": "^4.17.1",
     "gatsby-plugin-mdx": "^3.17.0",
@@ -30,6 +31,7 @@
     "gatsby-plugin-sitemap": "^5.17.0",
     "gatsby-source-filesystem": "^4.17.0",
     "gatsby-source-pulverizer": "link:src/plugins/gatsby-source-pulverizer",
+    "lodash": "^4.17.21",
     "pluralize": "^8.0.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -40,6 +42,7 @@
     "@types/pluralize": "^0.0.29",
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
+    "@types/react-helmet": "^6.1.5",
     "typescript": "^4.7.4"
   }
 }
