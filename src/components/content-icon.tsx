@@ -15,7 +15,7 @@ export function ContentIcon({ content, size, ...rest }: ContentIconProps) {
   return (
     <svg height={size} width={size} {...rest}>
       <use
-        xlinkHref={`/images/svgs/aa310bd20/${content.contentType.name}.svg#${content.uiIcon}`}
+        xlinkHref={`/images/svgs/${content.contentType.name}.svg#${content.uiIcon}`}
       />
     </svg>
   );
