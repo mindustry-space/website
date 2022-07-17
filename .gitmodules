@@ -1,0 +1,3 @@
+[submodule "static/images/svgs"]
+	path = static/images/svgs
+	url = https://github.com/mindustry-space/mindustry-svgs.git

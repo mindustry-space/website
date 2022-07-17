@@ -1,0 +1,12 @@
+{
+  "name": "gatsby-source-pulverizer",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.27.2",
+    "pluralize": "^8.0.0"
+  },
+  "peerDependencies": {
+    "gatsby": "^4.18.0"
+  }
+}
