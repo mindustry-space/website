@@ -1,10 +1,10 @@
-import * as React from 'react';
-import ContentIcon from '../../components/content-icon';
-import ContentTable from '../../components/content-table';
-import Layout from '../../components/layout';
-import { camelToWords, path, round } from '../../utils';
-import { graphql, Link, PageProps } from 'gatsby';
-import { Helmet } from 'react-helmet';
+import * as React from "react";
+import ContentIcon from "../../components/content-icon";
+import ContentTable from "../../components/content-table";
+import Layout from "../../components/layout";
+import { camelToWords, path, round } from "../../utils";
+import { graphql, Link, PageProps } from "gatsby";
+import { Helmet } from "react-helmet";
 import {
   Badge,
   Center,
@@ -60,8 +60,8 @@ export default function blockPage({ data }: PageProps<Queries.BlockPageQuery>) {
             requirements: (
               <Wrap spacing={2}>
                 {data.block.requirements.map((requirement) => (
-                  <Tooltip hasArrow label={requirement.item.localizedName}>
-                    <LinkBox as={HStack} spacing={0.5}>
+                  <LinkBox as={HStack} spacing={0.5}>
+                    <Tooltip hasArrow label={requirement.item.localizedName}>
                       <LinkOverlay as={Link} to={path(requirement.item)}>
                         <ContentIcon
                           content={requirement.item}
@@ -69,11 +69,11 @@ export default function blockPage({ data }: PageProps<Queries.BlockPageQuery>) {
                           display="inline-block"
                         />
                       </LinkOverlay>
-                      <Center as="span" h="1.125rem">
-                        {requirement.amount}
-                      </Center>
-                    </LinkBox>
-                  </Tooltip>
+                    </Tooltip>
+                    <Center as="span" h="1.125rem">
+                      {requirement.amount}
+                    </Center>
+                  </LinkBox>
                 ))}
               </Wrap>
             ),
