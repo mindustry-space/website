@@ -1,5 +1,5 @@
-import pluralize from 'pluralize';
-import { get } from 'axios';
+import pluralize from "pluralize";
+import { get } from "axios";
 import type { CreateSchemaCustomizationArgs, SourceNodesArgs } from "gatsby";
 
 function capitalize(v: string) {
@@ -104,7 +104,6 @@ export async function createSchemaCustomization({
     uiIcon: String!
     # ---
     color: Color!
-
   }
 
   type Liquid implements UnlockableContent & MappableContent & Content & Node {
@@ -129,6 +128,7 @@ export async function createSchemaCustomization({
     localizedName: String!
     uiIcon: String!
     # ---
+    color: Color!
   }
 
   type Team implements UnlockableContent & MappableContent & Content & Node {

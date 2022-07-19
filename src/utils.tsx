@@ -1,4 +1,3 @@
-import * as React from "react";
 import pluralize from "pluralize";
 
 export type Content =

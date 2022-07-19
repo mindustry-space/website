@@ -12,7 +12,7 @@ import {
 } from "../../components/content-header";
 
 export default function itemPage({ data }: PageProps<Queries.ItemPageQuery>) {
-  if (data.item === null) throw "item block"; // typing
+  if (data.item === null) throw "null item"; // typing
 
   return (
     <>
@@ -130,20 +130,18 @@ export const query = graphql`
     # }
 
     item(id: { eq: $id }) {
-      ... on Item {
-        buildable
-        charge
-        color {
-          ...RGBA
-        }
-        cost
-        explosiveness
-        flammability
-        hardness
-        healthScaling
-        lowPriority
-        radioactivity
+      buildable
+      charge
+      color {
+        ...RGBA
       }
+      cost
+      explosiveness
+      flammability
+      hardness
+      healthScaling
+      lowPriority
+      radioactivity
 
       ...ContentHeader
     }

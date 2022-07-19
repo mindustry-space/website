@@ -1,8 +1,8 @@
-import * as React from 'react';
-import _ from 'lodash';
-import ColorMenu from './color-menu';
-import { camelToWords, round, up } from '../utils';
-import { InfoOutlineIcon } from '@chakra-ui/icons';
+import * as React from "react";
+import _ from "lodash";
+import ColorMenu from "./color-menu";
+import { camelToWords, round, up } from "../utils";
+import { InfoOutlineIcon } from "@chakra-ui/icons";
 import {
   Heading,
   Table,
@@ -80,6 +80,7 @@ export function ContentTable({
       <Heading as="h2" fontSize="xl" my={2}>
         Properties
       </Heading>
+
       <TableContainer>
         <Table variant="striped">
           <Thead>
