@@ -1,11 +1,11 @@
-import * as React from 'react';
-import ContentList from '../../components/content-list';
-import ContentTable from '../../components/content-table';
-import Layout from '../../components/layout';
-import { Badge, Heading } from '@chakra-ui/react';
-import { camelToWords, percentage, percentageDiff } from '../../utils';
-import { graphql, PageProps } from 'gatsby';
-import { Helmet } from 'react-helmet';
+import * as React from "react";
+import ContentList from "../../components/content-list";
+import ContentTable from "../../components/content-table";
+import Layout from "../../components/layout";
+import { Badge, Heading } from "@chakra-ui/react";
+import { camelToWords, percentage, percentageDiff } from "../../utils";
+import { graphql, PageProps } from "gatsby";
+import { Helmet } from "react-helmet";
 import {
   ContentHeader,
   ContentTableHeaderOverrides,
@@ -52,7 +52,9 @@ export default function itemPage({ data }: PageProps<Queries.ItemPageQuery>) {
           Connections
         </Heading>
         {Object.entries(data).map(([k, v]) =>
-          k.endsWith("By") && v.nodes.length > 0 ? (
+          k.endsWith("By") &&
+          v.nodes.length > 0 &&
+          (k === "mineableBy" ? data.droppedBy.nodes.length > 0 : true) ? (
             <>
               <Heading as="h3" fontSize="lg" my={2}>
                 {camelToWords(k)}
